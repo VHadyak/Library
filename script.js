@@ -1,31 +1,44 @@
 
 const libraryContainer = document.querySelector(".library-wrapper");
+
 const modalBtn = document.querySelector(".modal-btn");
+const closeBtn = document.querySelector("dialog button");
+const submitBtn = document.querySelector("#submit-btn");
+const dialog = document.querySelector("dialog");
 
 const myLibrary = [];
 
-function Book(title) {
+function Book(title, author, genre, pages, isRead) {
   this.title = title;
+  this.author = author;
+  this.genre = genre;
+  this.pages = pages;
+  this.isRead = isRead;
 };
 
- // User inputs 
-const book1 = new Book("Book1");         
-const book2 = new Book("Book2");
-const book3 = new Book("Book3");
 
+// Convert user input to an object and push it to a Library array
 function addBookToLibrary() {
-  myLibrary.push(book1);
-  myLibrary.push(book2);
-  myLibrary.push(book3);
+  const title = document.querySelector("#title").value;
+  const author = document.querySelector("#author").value;
+  const genre = document.querySelector("#genre").value;
+  const pages = document.querySelector("#pageCount").value;
+  const isRead = document.querySelector(".isRead").checked;
+
+  const newBook = new Book(title, author, genre, pages, isRead);
+
+  myLibrary.push(newBook);
+  console.log(myLibrary);
 };
-addBookToLibrary();
+
 
 function displayBook() {
+  libraryContainer.textContent = "";                      // For each newly added book, erase the previous one that is in an array
+
   myLibrary.forEach((book) => {
     let bookCard = document.createElement("div");
     bookCard.classList.add("book-sample");
     libraryContainer.appendChild(bookCard);
-
 
     let bookTitle = document.createElement("h1");
     bookCard.appendChild(bookTitle);
@@ -37,4 +50,25 @@ function displayBook() {
     bookTitle.textContent = book.title;
   });
 };
-displayBook();
+
+// Add a modal for user input
+
+modalBtn.addEventListener("click", () => {
+  dialog.showModal();
+});
+
+closeBtn.addEventListener("click", () => {
+  dialog.close();
+});
+
+
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  addBookToLibrary()
+  displayBook();
+
+  dialog.close();
+});
+
+
