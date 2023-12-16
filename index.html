@@ -38,17 +38,9 @@
           <label for="pageCount">Number of pages</label>
           <input type="number" id="pageCount" min="1" name="pageCount">
 
-          <fieldset>
-            <legend>Did you read that book?</legend>
-            <div>
-              <label for="yes">Yes</label>
-              <input type="radio" id="yes" class="isRead" name="isRead" value="Yes">    
-            </div>
-            <div>
-              <label for="no">No</label>
-              <input type="radio" id="no" class="isRead" name="isRead" value="No">
-            </div>
-          </fieldset>
+          <label for="isRead">Have you read it?
+            <input type="checkbox" id="isRead" name="isRead">
+          </label>
 
           <button type="submit" id="submit-btn" value="Submit">Submit</button>
         </form>
