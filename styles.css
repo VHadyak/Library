@@ -1,4 +1,8 @@
 
+:root {
+  
+}
+
 * {
   box-sizing: border-box;
 }
@@ -71,10 +75,18 @@ form {
   flex: 1;
 }
 
+.book-container {
+  outline: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .library-wrapper .book-sample {
   border: 2px solid black;
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .book-sample h1 {
@@ -90,6 +102,17 @@ form {
 .book-sample img {
   background-color: rgb(229, 223, 223);
   height: 90%;
+}
+
+.del-btn::before {
+  content: "Remove Book";
+}
+
+.del-btn {
+  outline: 1px solid green;
+  width: 50%;
+  height: 35px;
+  cursor: pointer;
 }
 
 .footer {
