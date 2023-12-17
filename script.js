@@ -18,11 +18,22 @@ function Book(title, author, genre, pages, isRead) {
 };
 
 Book.prototype.readStatus = function() {
-  if (this.isRead === true) {
-    return "Read";
-  } else {
-    return "Not read"
-  };
+  return this.isRead === true ? "Read" : "Not Read";
+};
+
+// Change read status based on the button clicked
+function toggleReadStatus(readBtn, book) {
+  readBtn.addEventListener("click", () => {
+    if (readBtn.textContent === "Read") {      
+      readBtn.textContent = "Not Read";
+      book.isRead = false;
+      console.log(book);
+    } else {
+      readBtn.textContent = "Read";
+      book.isRead = true;
+      console.log(book);
+    };
+  }); 
 };
 
 // Convert user input to an object and push it to a Library array
@@ -34,8 +45,6 @@ function addBookToLibrary() {
   const isRead = document.querySelector("#isRead").checked;
 
   const newBook = new Book(title, author, genre, pages, isRead);
-  newBook.readStatus();
-
   myLibrary.push(newBook);
 
   // Check if books are added correctly 
@@ -61,24 +70,33 @@ function displayBook() {
     let bookCard = document.createElement("div");
     bookCard.classList.add("book-sample");
 
-    bookCard.textContent = book.readStatus();             // Add a content box for this read status
-
     let bookTitle = document.createElement("h1");
     bookTitle.textContent = book.title;
 
     let bookImg = document.createElement("img");
     bookImg.classList.add("book-cover");                  // Generate random cover for each new book created ****
 
+    let btnContainer = document.createElement("div");
+    btnContainer.classList.add("btn-container");
+
     let delBtn = document.createElement("button");
     delBtn.classList.add("del-btn");
+
+    let readBtn = document.createElement("button");
+    readBtn.classList.add("read-btn");
+    
+    readBtn.textContent = book.readStatus();             // Add a content box for this read status
 
     libraryContainer.appendChild(bookContainer);
     bookContainer.appendChild(bookCard);
     bookCard.appendChild(bookTitle);
     bookCard.appendChild(bookImg); 
-    bookContainer.appendChild(delBtn);
+    btnContainer.appendChild(delBtn);
+    btnContainer.appendChild(readBtn);
+    bookContainer.appendChild(btnContainer);
 
     deleteBook(delBtn, bookContainer);
+    toggleReadStatus(readBtn, book);
   });
 };
 

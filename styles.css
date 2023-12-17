@@ -104,12 +104,28 @@ form {
   height: 90%;
 }
 
+.btn-container {
+  display: flex;
+  gap: 20px;
+}
+
 .del-btn::before {
   content: "Remove Book";
 }
 
 .del-btn {
   outline: 1px solid green;
+  width: 50%;
+  height: 35px;
+  cursor: pointer;
+}
+
+.read-btn::before {
+  content: "";
+}
+
+.read-btn {
+  outline: 1px solid red;
   width: 50%;
   height: 35px;
   cursor: pointer;
