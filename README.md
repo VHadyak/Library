@@ -1,2 +1,2 @@
-# Library-Prototypes-
-This is a basic book library app to practice using prototypes and object constructors.
+# Library (No Storage)
+This is a basic book library app to practice using objects and dom manipulation. No storage for this type of project ... yet!
