@@ -15,6 +15,7 @@ function Book(title, author, genre, pages, isRead) {
   this.genre = genre;
   this.pages = pages;
   this.isRead = isRead;
+  this.color = createGradient();
 };
 
 Book.prototype.readStatus = function() {
@@ -61,7 +62,7 @@ function resetValues() {
 };
 
 function displayBook() {
-  libraryContainer.textContent = "";                      // For each newly added book, erase the previous one that is in an array
+  libraryContainer.textContent = "";                                           // For each newly added book, erase the previous one that is in an array
 
   myLibrary.forEach((book) => {
     let bookContainer = document.createElement("div");
@@ -73,8 +74,9 @@ function displayBook() {
     let bookTitle = document.createElement("h1");
     bookTitle.textContent = book.title;
 
-    let bookImg = document.createElement("img");
-    bookImg.classList.add("book-cover");                  // Generate random cover for each new book created ****
+    let bookCover = document.createElement("div");
+    bookCover.classList.add("book-cover");         
+    bookCover.style.background = book.color || createGradient();               // If color is assigned to a book, do not generate a new color!
 
     let btnContainer = document.createElement("div");
     btnContainer.classList.add("btn-container");
@@ -85,12 +87,12 @@ function displayBook() {
     let readBtn = document.createElement("button");
     readBtn.classList.add("read-btn");
     
-    readBtn.textContent = book.readStatus();             // Add a content box for this read status
+    readBtn.textContent = book.readStatus();                                   // Add a content box for this read status
 
     libraryContainer.appendChild(bookContainer);
     bookContainer.appendChild(bookCard);
     bookCard.appendChild(bookTitle);
-    bookCard.appendChild(bookImg); 
+    bookCard.appendChild(bookCover); 
     btnContainer.appendChild(delBtn);
     btnContainer.appendChild(readBtn);
     bookContainer.appendChild(btnContainer);
@@ -98,6 +100,25 @@ function displayBook() {
     deleteBook(delBtn, bookContainer);
     toggleReadStatus(readBtn, book);
   });
+};
+
+function generateColor() {
+  let letters = "0123456789ABCDEF"
+  let color = "#";
+
+  for (let i = 0; i < 6; i++) {
+     color += letters[Math.floor(Math.random() * 16)];      // Append 6-char hex code to create a color 
+  };
+  return color;
+};
+
+// Generate random mixture of colors for book covers
+function createGradient() {
+  const color1 = generateColor();
+  const color2 = generateColor();
+  const color3 = generateColor();
+  const color4 = generateColor();
+  return `linear-gradient(to bottom left, ${color1}, ${color2}, ${color3}, ${color4})`;
 };
 
 // Remove book from the library 
