@@ -11,30 +11,11 @@ const myLibrary = [];
 
 function Book(title, author, genre, pages, isRead) {
   this.title = title;
-  this.author = author;
-  this.genre = genre;
-  this.pages = pages;
+  this.author = author;       
+  this.genre = genre;               
+  this.pages = pages;       
   this.isRead = isRead;
   this.color = createGradient();
-};
-
-Book.prototype.readStatus = function() {
-  return this.isRead === true ? "Read" : "Not Read";
-};
-
-// Change read status based on the button clicked
-function toggleReadStatus(readBtn, book) {
-  readBtn.addEventListener("click", () => {
-    if (readBtn.textContent === "Read") {      
-      readBtn.textContent = "Not Read";
-      book.isRead = false;
-      console.log(book);
-    } else {
-      readBtn.textContent = "Read";
-      book.isRead = true;
-      console.log(book);
-    };
-  }); 
 };
 
 // Convert user input to an object and push it to a Library array
@@ -52,17 +33,33 @@ function addBookToLibrary() {
   console.log(myLibrary);
 };
 
-// Reset input values after the modal has been submitted
-function resetValues() {
-  document.querySelector("#title").value = "";
-  document.querySelector("#author").value = "";
-  document.querySelector("#genre").value = "";
-  document.querySelector("#pageCount").value = "";
-  document.querySelector("#isRead").checked = false;
+function readBtnHandler(readBtn, color, text) {
+  readBtn.style.backgroundColor = color;
+  readBtn.textContent = text;
+};
+
+// Change status of a button
+Book.prototype.readStatus = function(readBtn) {
+  function updateBtn() {
+    if (this.isRead) {
+      readBtnHandler(readBtn, "green", "Read");
+    } else {
+      readBtnHandler(readBtn, "red", "Not Read");
+    };
+  };
+
+  updateBtn.call(this);                                                        // Set 'this' to the book object in invoked function
+
+  readBtn.addEventListener("click", () => {
+    this.isRead = !this.isRead;                                                // If true, assign false
+    updateBtn.call(this);
+  });
+
+  return readBtn.textContent;
 };
 
 function displayBook() {
-  libraryContainer.textContent = "";                                           // For each newly added book, erase the previous one that is in an array
+  libraryContainer.textContent = "";                                           // For each newly added book, only include the current one on display (Avoids multiplying)
 
   myLibrary.forEach((book) => {
     let bookContainer = document.createElement("div");
@@ -74,9 +71,23 @@ function displayBook() {
     let bookTitle = document.createElement("h1");
     bookTitle.textContent = book.title;
 
+    let author = document.createElement("p");
+    let genre = document.createElement("p");
+    let numOfPages = document.createElement("p");
+  
+    author.textContent = `Book author: ${book.author}`;
+    genre.textContent = `Genre: ${book.genre}`;
+    numOfPages.textContent = `Number of pages: ${book.pages}`;
+
     let bookCover = document.createElement("div");
     bookCover.classList.add("book-cover");         
-    bookCover.style.background = book.color || createGradient();               // If color is assigned to a book, do not generate a new color!
+    bookCover.style.background = book.color || createGradient();               // If color is assigned to a book, do not generate a new color for the same book!
+
+    let innerContent = document.createElement("div");
+    innerContent.classList.add("inner-container");
+
+    let contentText = document.createElement("div");
+    contentText.classList.add("small-content");
 
     let btnContainer = document.createElement("div");
     btnContainer.classList.add("btn-container");
@@ -87,10 +98,15 @@ function displayBook() {
     let readBtn = document.createElement("button");
     readBtn.classList.add("read-btn");
     
-    readBtn.textContent = book.readStatus();                                   // Add a content box for this read status
+    readBtn.textContent = book.readStatus(readBtn);                            
 
-    libraryContainer.appendChild(bookContainer);
+    innerContent.appendChild(contentText);
+    contentText.appendChild(author);
+    contentText.appendChild(genre);
+    contentText.appendChild(numOfPages);
     bookContainer.appendChild(bookCard);
+    bookContainer.appendChild(innerContent);
+    libraryContainer.appendChild(bookContainer);
     bookCard.appendChild(bookTitle);
     bookCard.appendChild(bookCover); 
     btnContainer.appendChild(delBtn);
@@ -98,7 +114,6 @@ function displayBook() {
     bookContainer.appendChild(btnContainer);
 
     deleteBook(delBtn, bookContainer);
-    toggleReadStatus(readBtn, book);
   });
 };
 
@@ -114,11 +129,12 @@ function generateColor() {
 
 // Generate random mixture of colors for book covers
 function createGradient() {
-  const color1 = generateColor();
-  const color2 = generateColor();
-  const color3 = generateColor();
-  const color4 = generateColor();
-  return `linear-gradient(to bottom left, ${color1}, ${color2}, ${color3}, ${color4})`;
+  const colors = [];
+  for (let i = 0; i < 4; i++) {
+    colors.push(generateColor());
+  };
+
+  return `linear-gradient(to bottom left, ${colors.join(", ")})`;
 };
 
 // Remove book from the library 
@@ -143,6 +159,15 @@ function updateIndex() {
   });
 };
 
+// Reset input values after the modal has been submitted
+function resetValues() {
+  document.querySelector("#title").value = "";
+  document.querySelector("#author").value = "";
+  document.querySelector("#genre").value = "";
+  document.querySelector("#pageCount").value = "";
+  document.querySelector("#isRead").checked = false;
+};
+
 // Add a modal for user input
 modalBtn.addEventListener("click", () => {
   resetValues();
@@ -155,15 +180,11 @@ closeBtn.addEventListener("click", () => {
 
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
-
   addBookToLibrary();
   displayBook();
-
   dialog.close();
 });
 
-
-// TODO: Each new del button with book displayed should be clicked a display a message
 
 
 
