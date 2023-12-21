@@ -49,11 +49,129 @@ body {
 
 
 
-
+dialog {
+  border: 2px solid rgb(121, 135, 227);
+  background-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  padding: 30px;
+  position: relative;
+}
 
 form {
  display: flex;
  flex-direction: column;
+ gap: 15px;
+}
+
+input {
+  background-color: black;
+  border: none;
+  border-bottom: 1px solid rgb(121, 135, 227);
+  outline: none;
+  color: white;
+  padding: 0;
+}
+
+select {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  appearance: none; 
+  -webkit-appearance: none;
+  padding-bottom: 2px;
+}
+
+
+#genre {
+  background-color: black;
+  border: none;
+  border-bottom: 1px solid rgb(121, 135, 227);
+  outline: none;
+  cursor: pointer;
+  color: white;
+}
+
+label[for="isRead"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox {
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgb(121, 135, 227);
+  background-color: rgb(18, 17, 17);
+  position: relative;
+  border-radius: 3px;
+}
+
+.checkmark::before {
+  content: '\2713'; 
+  color: white; 
+  font-size: 14px; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+input[type="checkbox"]:checked + .custom-checkbox .checkmark::before {
+  display: block;
+}
+
+label {
+  margin-bottom: -5px;
+  color: rgba(255, 255, 255, 0.664);
+}
+
+#cancel {
+  position: relative;
+  bottom: 18px;
+  right: 18px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(121, 135, 227, 0.702);
+  background-color: black;
+  color: rgba(254, 254, 254, 0.72);
+  padding-bottom: 3px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+#cancel::before {
+  content: "x";
+}
+
+#cancel:hover {
+  background-color: rgb(53, 18, 86);
+}
+
+#submit-btn {
+  margin-top: 15px;
+  border: 1px solid rgb(121, 135, 227);
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#submit-btn:hover {
+  background-color: rgb(53, 18, 86);
 }
 
 .header > button {

@@ -74,7 +74,6 @@ function displayBook() {
     let author = document.createElement("p");
     let genre = document.createElement("p");
     let numOfPages = document.createElement("p");
-  
     author.textContent = `Book author: ${book.author}`;
     genre.textContent = `Genre: ${book.genre}`;
     numOfPages.textContent = `Number of pages: ${book.pages}`;
@@ -122,7 +121,7 @@ function generateColor() {
   let color = "#";
 
   for (let i = 0; i < 6; i++) {
-     color += letters[Math.floor(Math.random() * 16)];      // Append 6-char hex code to create a color 
+     color += letters[Math.floor(Math.random() * 16)];                         // Append 6-char hex code to create a color 
   };
   return color;
 };
@@ -179,10 +178,13 @@ closeBtn.addEventListener("click", () => {
 });
 
 submitBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  addBookToLibrary();
-  displayBook();
-  dialog.close();
+  const form = document.querySelector("form");
+  if (form.checkValidity()) {
+    e.preventDefault();
+    addBookToLibrary();
+    displayBook();
+    dialog.close();
+  };
 });
 
 

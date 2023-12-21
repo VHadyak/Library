@@ -13,16 +13,16 @@
     <div class="header">
       <h1>Digital Library</h1>
       <dialog>
-        <button value="cancel" formmethod="dialog" autofocus>Close</button>
+        <button value="cancel" id="cancel" formmethod="dialog" autofocus></button>
         <form>
           <label for="title">Book title</label>
-          <input type="text" id="title" name="title">
+          <input type="text" id="title" name="title" required autocomplete="off" maxlength="22">
 
           <label for="author">Author</label>
-          <input type="text" id="author" name="author">
+          <input type="text" id="author" name="author" required autocomplete="off" maxlength="22">
 
           <label for="genre">Genre</label>
-          <select id="genre" name="genre"> 
+          <select id="genre" name="genre" required> 
             <option value="Fiction">Fiction</option>
             <option value="Non-fiction">Non-fiction</option>
             <option value="Mystery">Mystery</option>
@@ -36,10 +36,14 @@
           </select>
 
           <label for="pageCount">Number of pages</label>
-          <input type="number" id="pageCount" min="1" name="pageCount">
+          <input type="number" id="pageCount" min="1" name="pageCount" required max="9999">
 
-          <label for="isRead">Have you read it?
+          <label for="isRead">
+            Have you read it?
             <input type="checkbox" id="isRead" name="isRead">
+            <div class="custom-checkbox">
+              <div class="checkmark"></div>
+            </div>
           </label>
 
           <button type="submit" id="submit-btn" value="Submit">Submit</button>
