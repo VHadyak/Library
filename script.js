@@ -1,8 +1,8 @@
 // Vlad Hadyak (Simple Book Library)
 
 const libraryContainer = document.querySelector(".library-wrapper");
-
 const modalBtn = document.querySelector(".modal-btn");
+
 const closeBtn = document.querySelector("dialog button");
 const submitBtn = document.querySelector("#submit-btn");
 const dialog = document.querySelector("dialog");
@@ -42,9 +42,9 @@ function readBtnHandler(readBtn, color, text) {
 Book.prototype.readStatus = function(readBtn) {
   function updateBtn() {
     if (this.isRead) {
-      readBtnHandler(readBtn, "green", "Read");
+      readBtnHandler(readBtn, "rgb(93, 235, 93)", "Read");
     } else {
-      readBtnHandler(readBtn, "red", "Not Read");
+      readBtnHandler(readBtn, "rgb(245, 67, 67)", "Not Read");
     };
   };
 
@@ -111,7 +111,7 @@ function displayBook() {
     btnContainer.appendChild(delBtn);
     btnContainer.appendChild(readBtn);
     bookContainer.appendChild(btnContainer);
-
+    libraryContainer.appendChild(modalBtn);
     deleteBook(delBtn, bookContainer);
   });
 };
@@ -121,7 +121,7 @@ function generateColor() {
   let color = "#";
 
   for (let i = 0; i < 6; i++) {
-     color += letters[Math.floor(Math.random() * 16)];                         // Append 6-char hex code to create a color 
+     color += letters[Math.floor(Math.random() * 8)];                         // Append 6-char hex code to create a color 
   };
   return color;
 };

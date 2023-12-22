@@ -15,7 +15,7 @@
       <dialog>
         <button value="cancel" id="cancel" formmethod="dialog" autofocus></button>
         <form>
-          <label for="title">Book title</label>
+          <label for="title">Book Title</label>
           <input type="text" id="title" name="title" required autocomplete="off" maxlength="22">
 
           <label for="author">Author</label>
@@ -49,10 +49,23 @@
           <button type="submit" id="submit-btn" value="Submit">Submit</button>
         </form>
       </dialog>
-      <button class="modal-btn">New Book</button>
     </div>
-    <div class="library-wrapper"></div>
-    <div class="footer">Vlad Hadyak</div>
+    <div class="library-wrapper">
+      <button class="modal-btn">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g id="Edit / Add_Plus">
+                <path id="Vector" d="M6 12H12M12 12H18M12 12V18M12 12V6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </g>
+            </g>
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div class="footer">Copyright © 2023 <a href="https://github.com/VHadyak" target="_blank">VHadyak</a></div>
   </div>
   </div>
 </body>
