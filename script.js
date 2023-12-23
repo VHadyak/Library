@@ -2,7 +2,6 @@
 
 const libraryContainer = document.querySelector(".library-wrapper");
 const modalBtn = document.querySelector(".modal-btn");
-
 const closeBtn = document.querySelector("dialog button");
 const submitBtn = document.querySelector("#submit-btn");
 const dialog = document.querySelector("dialog");
@@ -53,9 +52,25 @@ Book.prototype.readStatus = function(readBtn) {
   readBtn.addEventListener("click", () => {
     this.isRead = !this.isRead;                                                // If true, assign false
     updateBtn.call(this);
+    console.log(myLibrary);
   });
 
   return readBtn.textContent;
+};
+
+// Change style of user text content
+function styleLabels(labelText, content) {
+  label = document.createElement("p");
+  span = document.createElement("span");
+
+  label.textContent = labelText;
+  span.textContent = content;
+  span.style.color = "rgb(15 78 90)";
+  span.style.fontSize = "1.3rem";
+
+  label.appendChild(span);
+
+  return label;
 };
 
 function displayBook() {
@@ -71,12 +86,9 @@ function displayBook() {
     let bookTitle = document.createElement("h1");
     bookTitle.textContent = book.title;
 
-    let author = document.createElement("p");
-    let genre = document.createElement("p");
-    let numOfPages = document.createElement("p");
-    author.textContent = `Book author: ${book.author}`;
-    genre.textContent = `Genre: ${book.genre}`;
-    numOfPages.textContent = `Number of pages: ${book.pages}`;
+    let authorLabel = styleLabels("Book author: ", book.author);
+    let genreLabel = styleLabels("Genre: ", book.genre);
+    let numOfPagesLabel = styleLabels("Number of pages: ", book.pages);
 
     let bookCover = document.createElement("div");
     bookCover.classList.add("book-cover");         
@@ -100,9 +112,9 @@ function displayBook() {
     readBtn.textContent = book.readStatus(readBtn);                            
 
     innerContent.appendChild(contentText);
-    contentText.appendChild(author);
-    contentText.appendChild(genre);
-    contentText.appendChild(numOfPages);
+    contentText.appendChild(authorLabel);
+    contentText.appendChild(genreLabel);
+    contentText.appendChild(numOfPagesLabel);
     bookContainer.appendChild(bookCard);
     bookContainer.appendChild(innerContent);
     libraryContainer.appendChild(bookContainer);
@@ -112,6 +124,7 @@ function displayBook() {
     btnContainer.appendChild(readBtn);
     bookContainer.appendChild(btnContainer);
     libraryContainer.appendChild(modalBtn);
+
     deleteBook(delBtn, bookContainer);
   });
 };
@@ -136,6 +149,14 @@ function createGradient() {
   return `linear-gradient(to bottom left, ${colors.join(", ")})`;
 };
 
+// Set an index for each book
+function updateIndex() {
+  const bookContainers = document.querySelectorAll(".book-container");
+  bookContainers.forEach((book, index) => {
+    book.setAttribute("data-index", index)
+  });
+};
+
 // Remove book from the library 
 function deleteBook(delBtn, book) {
   delBtn.addEventListener("click", () => {
@@ -150,14 +171,6 @@ function deleteBook(delBtn, book) {
   });
 };
 
-// Set an index for each book
-function updateIndex() {
-  const bookContainers = document.querySelectorAll(".book-container");
-  bookContainers.forEach((book, index) => {
-    book.setAttribute("data-index", index)
-  });
-};
-
 // Reset input values after the modal has been submitted
 function resetValues() {
   document.querySelector("#title").value = "";
@@ -167,7 +180,7 @@ function resetValues() {
   document.querySelector("#isRead").checked = false;
 };
 
-// Add a modal for user input
+// Show a modal for user input
 modalBtn.addEventListener("click", () => {
   resetValues();
   dialog.showModal();
@@ -179,7 +192,7 @@ closeBtn.addEventListener("click", () => {
 
 submitBtn.addEventListener("click", (e) => {
   const form = document.querySelector("form");
-  if (form.checkValidity()) {
+  if (form.checkValidity()) {                                                  // Check if all inputs have been filled before submitting it
     e.preventDefault();
     addBookToLibrary();
     displayBook();
